@@ -1,0 +1,14 @@
+<div class="bloq-card-multimedia">
+  <div class="card" style="width: 22rem;" *ngFor="let multi of multimedia">
+    <a *ngIf="!multi.thumbnail_url; else elseBlock" href="{{multi.permalink}}" target="_blank">
+      <img src="{{multi.media_url}}" class="card-img-top" alt="{{multi.id}}">
+    </a>
+    <ng-template #elseBlock>
+      <video style="width: 100%" src="{{multi.media_url}}" autoplay></video>
+    </ng-template>
+    <div class="card-body">
+      <p class="card-text">{{multi.caption}}</p>
+    </div>
+  </div>
+</div>
+

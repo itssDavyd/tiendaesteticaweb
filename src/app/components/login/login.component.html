@@ -1,0 +1,24 @@
+<div class="col-md-12" style="display: flex; justify-content: center; margin-top: 6rem;" *ngIf="!identity">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-md-5"
+        style="padding: 2rem; border: 1px solid black; border-radius: 0.50rem;">
+    <h2 style="text-align: center;">Acceso a panel de Administración</h2><br>
+    <div class="mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="user.email" required
+             aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">Email de la cuenta administradora del panel.</div>
+      <span *ngIf="!email.valid && email.touched">
+        El email no es válido
+      </span>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="password">Contraseña</label>
+      <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
+             required>
+      <span *ngIf="!password.valid && password.touched">
+            La contraseña no es válido
+          </span>
+    </div>
+    <input type="submit" value="Acceder" class="btn btn-success">
+  </form>
+</div>

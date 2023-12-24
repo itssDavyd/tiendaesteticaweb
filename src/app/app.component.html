@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<!--Main-->
+<main>
+  <header id="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"></a>
+        <img src="../assets/img/logo.jpg" alt="" width="75" height="66" class="d-inline-block align-text-top">
+        <div class="collapse navbar-collapse" id="navbarNav" style="display: flex; justify-content: center; gap: 2rem">
+          <ul class="navbar-nav" style="gap: 0.75rem;">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/']" (click)="setActiveLink('/')" *ngIf="identity"
+                 [class.active]="activeLink === '/'"><i class="fa fa-calendar" aria-hidden="true"></i> Calendario</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['citas']" (click)="setActiveLink('citas')"
+                 [class.active]="activeLink === 'citas'"><i class="fa fa-address-book" aria-hidden="true"></i> Citas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['listado/citas']" (click)="setActiveLink('listadocitas')"
+                 *ngIf="identity"
+                 [class.active]="activeLink === 'listadocitas'"><i class="fa fa-list-alt" aria-hidden="true"></i>
+                Listado Citas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['actualidad']" (click)="setActiveLink('actualidad')"
+                 [class.active]="activeLink === 'actualidad'"><i class="fa fa-instagram" aria-hidden="true"></i>
+                Actualidad</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenedor del portlet con clases de Bootstrap -->
+  <div id="portletContainer" class="portlet border rounded bg-light" *ngIf="identity">
+    <!-- Título del portlet con las clases de Bootstrap -->
+    <div class="portlet-header bg-warning text-light p-3" (click)="togglePortlet()" style="cursor: pointer;">
+      <span class="fw-bold">Calendario Administración</span>
+      <span class="arrow border border-light rounded p-1"></span>
+    </div>
+
+    <!-- Contenido del portlet con clases de Bootstrap -->
+    <div class="portlet-content p-3" *ngIf="portletExpanded">
+      <div id="calendar">
+        <full-calendar [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Modificar cita</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="col-md-12">
+        <form #CalendarForm="ngForm" (ngSubmit)="onSubmit(CalendarForm)" class="col-md-12">
+          <input type="hidden" value="{{arrEditEvent.id}}" name="id">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="form-label form-label-sm">Nombre</label>
+            </div>
+            <div class="col-md-10">
+              <input disabled class="form-control form-control-sm" type="title" name="title"
+                     value="{{arrEditEvent.title}}">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="form-label form-label-sm">Gmail</label>
+            </div>
+            <div class="col-md-10">
+              <input disabled class="form-control form-control-sm" type="gmail" name="gmail"
+                     value="{{arrEditEvent.gmail}}">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="form-label form-label-sm">Fecha</label>
+            </div>
+            <div class="col-md-10">
+              <input disabled class="form-control form-control-sm" type="fecha" name="fecha"
+                     value="{{arrEditEvent.fecha}} {{arrEditEvent.hora}}">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="form-label form-label-sm">Estado</label>
+            </div>
+            <div class="col-md-10">
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                      name="estado" #estado="ngModel" [(ngModel)]="arrEditEvent.estado">
+                <option *ngFor="let estadocita of estadosCita" [ngValue]="estadocita.id"
+                        [selected]="arrEditEvent.estado == estadocita.id">
+                  {{estadocita.estado}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary close" (click)="modalRef?.hide()">Cerrar</button>
+            <button type="submit" class="btn btn-success">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <router-outlet></router-outlet>
+</main>
+<!--Main-->
+
+<!-- Footer -->
+<footer id="footer"
+        class="text-center text-lg-start text-white"
+        style="background-color: #ffacb9"
+>
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-6">
+          <h6 class="text-uppercase mb-4 font-weight-bold">
+            CMD Estética
+          </h6>
+          <p>
+            Centro de Belleza, cosmética y cuidado personal.
+          </p>
+          <ul>
+            <li>Técnica en cuidados estéticos de manos y pies.</li>
+            <li>Técnica manicurista.</li>
+            <li>Nail art a mano alzada.</li>
+          </ul>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="w-100 clearfix d-md-none"/>
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+          <p><i class="fas fa-home mr-3"></i> Calle La Vega, 4, Mieres, Asturias</p>
+          <p><i class="fas fa-envelope mr-3"></i> infocmd@gmail.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 34 644 00 48 94</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+
+    <hr class="my-3">
+
+    <!-- Section: Copyright -->
+    <section class="p-3 pt-0">
+      <div class="row d-flex align-items-center">
+        <!-- Grid column -->
+        <div class="col-md-7 col-lg-8 text-center text-md-start">
+          <!-- Copyright -->
+          <div class="p-3">
+            © 2024 Copyright:
+            <a class="text-white" href="http://cmdestetica.com/"
+            >cmdestetica.com</a
+            >
+          </div>
+          <!-- Copyright -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end"
+             style="display: flex; gap: 1.50rem; justify-content: center; align-items: center;">
+          <!-- Facebook -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            class="text-white"
+            role="button"
+          ><i class="fa fa-facebook-official fa-2x"></i></a>
+
+          <!-- Google -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            class="text-white"
+            role="button"
+          ><i class="fa fa-google fa-2x" aria-hidden="true"></i></a>
+
+          <!-- Instagram -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            class="text-white"
+            role="button"
+          ><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+        </div>
+        <!-- Grid column -->
+      </div>
+    </section>
+    <!-- Section: Copyright -->
+  </div>
+  <!-- Grid container -->
+</footer>
+<!-- Footer -->
+</body>
+</html>
+
+
+
+
+
