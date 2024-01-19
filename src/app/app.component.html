@@ -16,10 +16,10 @@
         <img src="../assets/img/logo.jpg" alt="" width="75" height="66" class="d-inline-block align-text-top">
         <div class="collapse navbar-collapse" id="navbarNav" style="display: flex; justify-content: center; gap: 2rem">
           <ul class="navbar-nav" style="gap: 0.75rem;">
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/']" (click)="setActiveLink('/')" *ngIf="identity"
-                 [class.active]="activeLink === '/'"><i class="fa fa-calendar" aria-hidden="true"></i> Calendario</a>
-            </li>
+            <!--            <li class="nav-item">
+                          <a class="nav-link" [routerLink]="['/']" (click)="setActiveLink('/')" *ngIf="identity"
+                             [class.active]="activeLink === '/'"><i class="fa fa-calendar" aria-hidden="true"></i> Calendario</a>
+                        </li>-->
             <li class="nav-item">
               <a class="nav-link" [routerLink]="['citas']" (click)="setActiveLink('citas')"
                  [class.active]="activeLink === 'citas'"><i class="fa fa-address-book" aria-hidden="true"></i> Citas</a>
@@ -35,29 +35,34 @@
                  [class.active]="activeLink === 'actualidad'"><i class="fa fa-instagram" aria-hidden="true"></i>
                 Actualidad</a>
             </li>
+<!--            <li class="nav-item">-->
+            <!--              <a class="nav-link" (click)="cleanCitas()" *ngIf="identity"><i class="fa fa-list-alt"-->
+            <!--                                                                             aria-hidden="true"></i>-->
+            <!--                Limpiar Citas</a>-->
+            <!--            </li>-->
           </ul>
         </div>
       </div>
     </nav>
   </header>
 
-  <!-- Contenedor del portlet con clases de Bootstrap -->
-  <div id="portletContainer" class="portlet border rounded bg-light" *ngIf="identity">
-    <!-- Título del portlet con las clases de Bootstrap -->
-    <div class="portlet-header bg-warning text-light p-3" (click)="togglePortlet()" style="cursor: pointer;">
-      <span class="fw-bold">Calendario Administración</span>
-      <span class="arrow border border-light rounded p-1"></span>
-    </div>
-
-    <!-- Contenido del portlet con clases de Bootstrap -->
-    <div class="portlet-content p-3" *ngIf="portletExpanded">
-      <div id="calendar">
-        <full-calendar [options]="calendarOptions"></full-calendar>
+  <!--  &lt;!&ndash; Contenedor del portlet con clases de Bootstrap &ndash;&gt;
+    <div id="portletContainer" class="portlet border rounded bg-light" *ngIf="identity">
+      &lt;!&ndash; Título del portlet con las clases de Bootstrap &ndash;&gt;
+      <div class="portlet-header bg-warning text-light p-3" (click)="togglePortlet()" style="cursor: pointer;">
+        <span class="fw-bold">Calendario Administración</span>
+        <span class="arrow border border-light rounded p-1"></span>
       </div>
-    </div>
-  </div>
 
-  <ng-template #template>
+      &lt;!&ndash; Contenido del portlet con clases de Bootstrap &ndash;&gt;
+      <div class="portlet-content p-3" *ngIf="portletExpanded">
+        <div id="calendar">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>-->
+
+<!--  <ng-template #template>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Modificar cita</h4>
       <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
@@ -120,7 +125,7 @@
         </form>
       </div>
     </div>
-  </ng-template>
+  </ng-template>-->
 
   <router-outlet></router-outlet>
 </main>
@@ -159,7 +164,7 @@
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
           <p><i class="fas fa-home mr-3"></i> Calle La Vega, 4, Mieres, Asturias</p>
-          <p><i class="fas fa-envelope mr-3"></i> infocmd@gmail.com</p>
+          <p><i class="fas fa-envelope mr-3"></i> infocmdestetica@gmail.com</p>
           <p><i class="fas fa-phone mr-3"></i> + 34 644 00 48 94</p>
         </div>
         <!-- Grid column -->
@@ -177,8 +182,8 @@
         <div class="col-md-7 col-lg-8 text-center text-md-start">
           <!-- Copyright -->
           <div class="p-3">
-            © 2024 Copyright:
-            <a class="text-white" href="http://cmdestetica.com/"
+            © {{copyrightYear}} Copyright:
+            <a class="text-white" href="https://cmdesteticamieres.000webhostapp.com/"
             >cmdestetica.com</a
             >
           </div>
@@ -190,24 +195,24 @@
         <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end"
              style="display: flex; gap: 1.50rem; justify-content: center; align-items: center;">
           <!-- Facebook -->
-          <a
-            class="btn btn-outline-light btn-floating m-1"
-            class="text-white"
-            role="button"
+          <a href="https://www.facebook.com/cmdesteticamieres/"
+             class="btn btn-outline-light btn-floating m-1"
+             class="text-white"
+             role="button"
           ><i class="fa fa-facebook-official fa-2x"></i></a>
 
           <!-- Google -->
-          <a
-            class="btn btn-outline-light btn-floating m-1"
-            class="text-white"
-            role="button"
+          <a href="https://cmdesteticamieres.000webhostapp.com/"
+             class="btn btn-outline-light btn-floating m-1"
+             class="text-white"
+             role="button"
           ><i class="fa fa-google fa-2x" aria-hidden="true"></i></a>
 
           <!-- Instagram -->
-          <a
-            class="btn btn-outline-light btn-floating m-1"
-            class="text-white"
-            role="button"
+          <a href="https://www.instagram.com/cmd.estetica/?igshid=YmMyMTA2M2Y%3D"
+             class="btn btn-outline-light btn-floating m-1"
+             class="text-white"
+             role="button"
           ><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
         </div>
         <!-- Grid column -->

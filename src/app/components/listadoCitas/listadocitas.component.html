@@ -1,27 +1,30 @@
-<div id="portletContainer" class="portlet border rounded bg-light">
+<div id="portletContainer" class="portlet border rounded" style="background-color: #fffffff2;">
   <div class="portlet-content p-3">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
-      <thead class="bg-dark text-white">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">NOMBRE</th>
-        <th scope="col">APELLIDOS</th>
-        <th scope="col">EMAIL</th>
-        <th scope="col">FECHA</th>
-        <th scope="col">ESTADO</th>
-
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of citas">
-        <td>{{item.id}}</td>
-        <td>{{item.nombre}}</td>
-        <td>{{item.apellidos}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.fecha}} {{item.hora}}</td>
-        <td>{{item.estado}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+             class="display compact" style="width: 100%">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">NOMBRE</th>
+          <!--          <th scope="col">APELLIDOS</th>-->
+          <!--          <th scope="col">EMAIL</th>-->
+          <th scope="col">FECHA</th>
+          <th scope="col">MOVIL</th>
+          <!--          <th scope="col">ESTADO</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of citas">
+          <td>{{item.id}}</td>
+          <td>{{item.nombre}} {{item.apellidos}}</td>
+          <!--          <td>{{item.email}}</td>-->
+          <td>{{item.fecha}} {{item.hora}}</td>
+          <td>{{item.telefono}}</td>
+          <!--          <td>{{item.estado}}</td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

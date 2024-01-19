@@ -2,6 +2,7 @@ import {HttpHeaders, HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {GLOBAL} from "./global";
+import axios, {AxiosResponse, AxiosError} from 'axios';
 
 @Injectable()
 export class CitasService {
@@ -25,9 +26,10 @@ export class CitasService {
 
   store(cita: any): Observable<any> {
     const data = new FormData();
-    data.append('email', cita.email);
+    // data.append('email', cita.email);
+    data.append('telefono', cita.telefono);
     data.append('nombre', cita.nombre);
-    data.append('apellidos', cita.apellidos);
+    data.append('apellidos', (cita.apellidos == "") ? "" : cita.apellidos);
     data.append('fecha', cita.fecha);
     data.append('hora', cita.hora);
     data.append('id_estado', "10");
@@ -37,5 +39,9 @@ export class CitasService {
   update(estado: any, id: number): Observable<any> {
     const data = {id_estado: estado};
     return this._http.put(this.url + 'citas/' + id, data);
+  }
+
+  cleanCitas(): Observable<any> {
+    return this._http.get(this.url + 'cleanCitas');
   }
 }

@@ -9,6 +9,7 @@ import {Cita} from "./models/cita";
 import {NgForm} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AxiosError, AxiosResponse} from "axios";
 
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   arrEditEvent: any;
   estadosCita: any;
   public cita: Cita;
+  public copyrightYear: any;
   title = 'web';
   public identity: any;
   public token: any;
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit {
   public portletExpanded = false; //Funcion para controlar que el portlet se abra, por defecto esta cerrado siempre.
   activeLink: string = 'citas';
   calendarOptions: CalendarOptions = {
+    height: 'auto',
     initialView: 'dayGridMonth',
     aspectRatio: 3.8,
     locale: 'es',
@@ -43,7 +46,8 @@ export class AppComponent implements OnInit {
   config = {
     animated: true
   };
-  @ViewChild('template') template!: string;
+
+  // @ViewChild('template') template!: string;
 
   constructor(
     private _route: ActivatedRoute,
@@ -65,7 +69,7 @@ export class AppComponent implements OnInit {
 
   handleDateClick(arg: any) {
     //Evento de click sobre calendario para levantar modal de modificaciones en eventos.
-    let eventData: Array<any> = [];
+    /*let eventData: Array<any> = [];
     let $fecha = arg.event.start; //Fecha Formateada
     let $hora = $fecha.toLocaleTimeString(); //Hora formateada
     let arrEditEventEstructurado = {
@@ -86,14 +90,14 @@ export class AppComponent implements OnInit {
         console.log(error)
       }
     );
-    this.modalRef = this._modalService.show(this.template, this.config);
+    this.modalRef = this._modalService.show(this.template, this.config);*/
 
   }
 
   ngOnInit(): void {
-
+    this.copyrightYear = new Date().getFullYear();
     //Pre-carga de las citas en el calendario.
-    this._citasService.index().subscribe(
+    /*this._citasService.index().subscribe(
       response => {
         if (response.success) {
           // console.log(response)
@@ -132,7 +136,7 @@ export class AppComponent implements OnInit {
       }, error => {
         console.log(error);
       }
-    );
+    );*/
   }
 
   togglePortlet() {
@@ -141,10 +145,11 @@ export class AppComponent implements OnInit {
 
   onSubmit(CalendarForm: NgForm) {
     //Llamada al método de update en la API, cogemos la cita y actualizamos la fecha, posteriori a esto vamos a tener que hacer referencia al servicio de sendMail para enviar el mail correspondiente al cliente para actualizar su Cita.
-    let $id = parseInt($('input[name="id"]').val());
+    /*let $id = parseInt($('input[name="id"]').val());
     let $estado = parseInt(CalendarForm.form.value.estado);
     this._citasService.update($estado, $id).subscribe(
       response => {
+        console.log(response)
         if (response.success) {
           this._router.navigate(['']).then(() => {
             this._toastr.success('Se ha actualizado correctamente el estado de la Cita.', 'Calendario');
@@ -155,6 +160,7 @@ export class AppComponent implements OnInit {
           });
         }
       }, error => {
+        console.log(error)
         this._router.navigate(['']).then(() => {
           this._toastr.error('Se ha producido un error al cambiar el estado de la Cita.', 'Calendario');
           CalendarForm.reset();
@@ -163,7 +169,7 @@ export class AppComponent implements OnInit {
           }, 2600);
         });
       }
-    )
+    )*/
   }
 
   // Función para construir el contenido del evento
@@ -175,6 +181,31 @@ export class AppComponent implements OnInit {
              <p>Fecha: ${formattedStartDate}</p><br>
              <p>Descripción: ${info.event.extendedProps.description}</p>`
     };
+  }
+
+  cleanCitas(): any {
+    this._citasService.cleanCitas().subscribe(
+      response => {
+        console.log(response)
+        if (response.success) {
+          this._router.navigate(['listado/citas']).then(() => {
+            this._toastr.success(response.data, 'Citas');
+          });
+        } else {
+          this._router.navigate(['listado/citas']).then(() => {
+            this._toastr.warning(response.data, 'Citas');
+          });
+        }
+      }, error => {
+        console.log(error)
+        this._router.navigate(['']).then(() => {
+          this._toastr.error('Se ha producido un error al realizar la limpieza', 'Citas');
+          setTimeout(() => {
+            location.reload()
+          }, 2600);
+        });
+      }
+    )
   }
 }
 

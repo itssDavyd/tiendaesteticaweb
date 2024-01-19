@@ -7,6 +7,7 @@
 /*  width: 100%;*/
 /*}*/
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
+
 #header {
   /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
   padding: 15px 0;
@@ -17,7 +18,7 @@
 }
 
 .nav-link {
-  color: #333;
+  color: #FFFFFF;
   position: relative;
   transition: color 0.3s ease;
 }
@@ -25,6 +26,10 @@
 .nav-link:hover,
 .nav-link.active {
   color: #ffacb9;
+}
+
+.navbar .nav-link.active {
+  color: #FFFFFF;
 }
 
 .nav-link::after {
@@ -97,7 +102,18 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f2f2f2;
+  background: #f2f2f2 url("./assets/img/background_multiple_cmd.png") repeat;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background: #f2f2f2 url("./assets/img/background_cmd.png") repeat;
+  }
+}
+
+/* Aumentar el espacio entre el campo de búsqueda y la tabla */
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 10px !important;
 }
 
 main {

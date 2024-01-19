@@ -1,34 +1,48 @@
 <div class="col-md-12" style="display: flex; justify-content: center; margin-top: 2rem; margin-bottom: 2rem;">
   <form #citasForm="ngForm" (ngSubmit)="onSubmit(citasForm)" class="col-md-5"
-        style="padding: 2rem; border: 1px solid #00000017; border-radius: 0.50rem; background-color: #d3d3d347;">
-    <h2 style="text-align: center;">Petición de cita</h2>
+        style="padding: 2rem; border: 1px solid #00000017; border-radius: 0.50rem; background-color: #ffffffc2;">
+    <h2 style="text-align: center;"><i class="fa fa-paper-plane" aria-hidden="true"></i> Petición de cita</h2>
     <div style="margin-left: 0.25rem;">
       <span class="spanTitleCitas">En este apartado podrá solicitar las citas a la tienda y posteriormente se le contactará confirmandole si la asistencia es posible en la fecha solicitada.</span>
     </div>
     <br>
+    <!--    <div class="mb-3">-->
+    <!--      <label class="form-label" for="email">Email</label>-->
+    <!--      <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="cita.email" required>-->
+    <!--      <span class="spanTitleCitas" style="margin-left: 1rem;" *ngIf="!email.valid && email.touched">-->
+    <!--        El email no es válido-->
+    <!--      </span>-->
+    <!--    </div>-->
     <div class="mb-3">
-      <label class="form-label" for="email">Email</label>
-      <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="cita.email" required>
-      <span class="spanTitleCitas" style="margin-left: 1rem;" *ngIf="!email.valid && email.touched">
-        El email no es válido
-      </span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label" for="nombre">Nombre</label>
+      <label class="form-label" for="nombre">Nombre (<span style="color: red">*</span>)</label>
       <input class="form-control" type="text" name="nombre" #nombre="ngModel" [(ngModel)]="cita.nombre" required>
+      <span class="spanTitleCitas" style="margin-left: 1rem;" *ngIf="!nombre.valid && nombre.touched">
+              El nombre no es válido
+            </span>
     </div>
     <div class="mb-3">
       <label class="form-label" for="apellidos">Apellidos</label>
       <input class="form-control" type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="cita.apellidos">
     </div>
     <div class="mb-3">
-      <label class="form-label" for="fecha">Fecha</label>
-      <input class="form-control" type="date" name="fecha" #fecha="ngModel" [(ngModel)]="cita.fecha" required>
+      <label class="form-label" for="telefono">Teléfono (<span style="color: red">*</span>)</label>
+      <input class="form-control" type="tel" pattern="[0-9]{9}" name="telefono" #telefono="ngModel"
+             [(ngModel)]="cita.telefono" required>
+      <span class="spanTitleCitas" style="margin-left: 1rem;" *ngIf="!telefono.valid && telefono.touched">
+              El teléfono no es válido
+            </span>
     </div>
     <div class="mb-3">
-      <label class="form-label" for="hora">Hora</label>
+      <label class="form-label" for="fecha">Fecha (<span style="color: red">*</span>)</label>
+      <input class="form-control" type="date" name="fecha" #fecha="ngModel" [(ngModel)]="cita.fecha" required>
+      <span class="spanTitleCitas" style="margin-left: 1rem;" *ngIf="!fecha.valid && fecha.touched">
+              La fecha no es válida
+            </span>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="hora">Hora (<span style="color: red">*</span>)</label>
       <input class="form-control" name="hora" #hora="ngModel" [(ngModel)]="cita.hora" [ngxTimepicker]="picker"
-             [format]="24" [min]="'10:00'" [max]="'20:00'">
+             [format]="24" [min]="'10:00'" [max]="'20:00'" required>
       <ngx-material-timepicker #picker [enableKeyboardInput]="false" [ESC]="true"
                                [theme]="oktTheme"></ngx-material-timepicker>
     </div>

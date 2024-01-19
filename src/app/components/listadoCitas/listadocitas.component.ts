@@ -29,9 +29,18 @@ export class ListadocitasComponent implements OnInit {
 
   ngOnInit(): void {
     this.dtOptions = {
-      pagingType: 'full_numbers',
+      pagingType: 'numbers',
+      order: [[2, 'asc']],
       info: false,
-      ordering: false,
+      paging: true,
+      processing: true,
+      ordering: true,
+      lengthChange: false,
+      autoWidth: true,
+      scrollY: 300,
+      scrollCollapse: true,
+      // scrollX: true,
+      jQueryUI: true,
       language: {
         searchPlaceholder: 'Buscar',
         lengthMenu: "Muestra _MENU_ citas por página",
@@ -85,6 +94,7 @@ export class ListadocitasComponent implements OnInit {
           const estado = estados.data.find((estado: any) => estado.id === cita.id_estado) || {estado: '-'};
           const newDate = new Date(cita.fecha);
           let formatDate = ((newDate.getDate() < 10) ? '0' + newDate.getDate() : newDate.getDate()) + '/' + (((newDate.getMonth() + 1) < 10) ? '0' + (newDate.getMonth() + 1) : (newDate.getMonth() + 1)) + '/' + newDate.getFullYear(); //Format Date
+          let telefono = (cita.telefono == "") ? "-" : cita.telefono;
           let resultData = {
             id: cita.id,
             nombre: cita.nombre,
@@ -92,7 +102,8 @@ export class ListadocitasComponent implements OnInit {
             email: cita.email,
             fecha: formatDate,
             hora: cita.hora,
-            estado: estado.estado
+            estado: estado.estado,
+            telefono: telefono
           };
           aux.push(resultData);
         });
